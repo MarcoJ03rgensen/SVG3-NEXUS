@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg3 version="1.0" xmlns="https://github.com/MarcoJ03rgensen/SVG3" viewBox="0 0 1920 1080">
+    <metadata>
+        <creator>MarcoJ03rgensen</creator>
+        <created>2025-11-30</created>
+        <description>Realistic Animated Tree with hierarchical wind simulation</description>
+    </metadata>
+
+    <defs>
+        <!-- Materials -->
+        <material id="mat-bark" type="standard" color="#5D4037" roughness="0.9" metalness="0.0" />
+        <material id="mat-leaf-dark" type="standard" color="#2E7D32" roughness="0.8" metalness="0.0" />
+        <material id="mat-leaf-light" type="standard" color="#4CAF50" roughness="0.8" metalness="0.0" />
+        
+        <!-- Geometries: Tree parts -->
+        <geometry id="geo-trunk-base" type="cylinder" radiusTop="0.5" radiusBottom="0.7" height="2.0" radialSegments="10" />
+        <geometry id="geo-trunk-mid" type="cylinder" radiusTop="0.35" radiusBottom="0.5" height="1.8" radialSegments="9" />
+        <geometry id="geo-trunk-top" type="cylinder" radiusTop="0.1" radiusBottom="0.35" height="1.8" radialSegments="8" />
+        <geometry id="geo-branch" type="cylinder" radiusTop="0.05" radiusBottom="0.15" height="1.2" radialSegments="6" />
+        
+        <!-- Detailed Foliage: Small, numerous clusters for realism -->
+        <geometry id="geo-leaf-puff" type="sphere" radius="0.5" widthSegments="5" heightSegments="4" />
+    </defs>
+
+    <!-- Scene Definition with Camera and Ambient Light -->
+    <scene id="main" camera="mainCamera" ambientLight="0.6">
+        
+        <!-- Camera Definition (Parsed by engine) -->
+        <camera id="mainCamera" type="perspective" fov="45" near="0.1" far="1000" position="0, 6, 15" />
+
+        <!-- Lighting -->
+        <light type="directional" color="#ffd700" intensity="1.2" position="8, 15, 8" />
+
+        <!-- TREE HIERARCHY -->
+        <group id="tree-root" position="0, -2, 0">
+            
+            <!-- 1. Base Trunk -->
+            <mesh geometry="geo-trunk-base" material="mat-bark" position="0, 1.0, 0">
+                <!-- Gentle sway at base -->
+                <animate attributeName="rotation" values="0,0,0.5; 0,0,-0.5; 0,0,0.5" dur="7s" repeatCount="indefinite" />
+
+                <!-- 2. Mid Trunk -->
+                <group position="0, 1.0, 0">
+                    <mesh geometry="geo-trunk-mid" material="mat-bark" position="0, 0.9, 0" />
+                    <animate attributeName="rotation" values="1,0,1; -1,0,-1; 1,0,1" dur="5s" repeatCount="indefinite" />
+
+                    <!-- Lower Branches -->
+                    <group position="0, 0.5, 0" rotation="0, 0, 45">
+                        <mesh geometry="geo-branch" material="mat-bark" position="0, 0.6, 0" />
+                        <!-- Leaf Clusters -->
+                        <group position="0, 1.0, 0">
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-dark" position="0,0,0" scale="1.5, 0.8, 1.5" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-light" position="0.3, 0.4, 0.2" scale="1.2, 0.8, 1.2" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-dark" position="-0.3, 0.3, -0.2" scale="1.2, 0.8, 1.2" />
+                        </group>
+                        <animate attributeName="rotation" values="0,0,45; 0,0,48; 0,0,45" dur="3s" repeatCount="indefinite" />
+                    </group>
+
+                    <group position="0, 0.7, 0" rotation="0, 120, 50">
+                        <mesh geometry="geo-branch" material="mat-bark" position="0, 0.6, 0" />
+                         <!-- Leaf Clusters -->
+                        <group position="0, 1.0, 0">
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-dark" position="0,0,0" scale="1.5, 0.8, 1.5" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-light" position="0.3, 0.4, 0.2" scale="1.2, 0.8, 1.2" />
+                        </group>
+                        <animate attributeName="rotation" values="0,120,50; 0,120,53; 0,120,50" dur="3.5s" repeatCount="indefinite" />
+                    </group>
+
+                    <!-- 3. Top Trunk -->
+                    <group position="0, 1.8, 0">
+                        <mesh geometry="geo-trunk-top" material="mat-bark" position="0, 0.9, 0" />
+                        <!-- Top sway (more intense) -->
+                        <animate attributeName="rotation" values="2,0,0; -2,0,0; 2,0,0" dur="4s" repeatCount="indefinite" />
+                        
+                        <!-- Top Crown (Dense leaves) -->
+                        <group position="0, 1.5, 0">
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-light" position="0, 0, 0" scale="2, 1, 2" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-dark" position="0.6, -0.2, 0" scale="1.5, 1, 1.5" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-dark" position="-0.6, -0.2, 0" scale="1.5, 1, 1.5" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-light" position="0, 0.5, 0.6" scale="1.5, 1, 1.5" />
+                            <mesh geometry="geo-leaf-puff" material="mat-leaf-light" position="0, 0.5, -0.6" scale="1.5, 1, 1.5" />
+                            
+                            <!-- Breathing animation for leaves -->
+                            <animate attributeName="scale" values="1,1,1; 1.05,1.05,1.05; 1,1,1" dur="2s" repeatCount="indefinite" />
+                        </group>
+                    </group>
+                </group>
+            </mesh>
+        </group>
+    </scene>
+</svg3>

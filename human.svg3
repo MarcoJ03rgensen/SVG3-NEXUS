@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg3 version="1.0" xmlns="https://github.com/MarcoJ03rgensen/SVG3" viewBox="0 0 1920 1080">
+    <metadata>
+        <creator>Gemini AI</creator>
+        <created>2025-11-30</created>
+        <description>Standard Human Figure with Hierarchical Rig</description>
+    </metadata>
+
+    <defs>
+        <!-- Materials -->
+        <material id="mat-skin" type="standard" color="#e0ac69" roughness="0.6" metalness="0.0" />
+        <material id="mat-shirt" type="standard" color="#3498db" roughness="0.8" metalness="0.0" />
+        <material id="mat-pants" type="standard" color="#2c3e50" roughness="0.9" metalness="0.0" />
+        <material id="mat-shoes" type="standard" color="#1a1a1a" roughness="0.5" metalness="0.1" />
+        <material id="mat-hair" type="standard" color="#3e2723" roughness="0.9" metalness="0.0" />
+
+        <!-- Geometries -->
+        <geometry id="geo-head" type="sphere" radius="0.25" widthSegments="16" heightSegments="16" />
+        <geometry id="geo-torso" type="box" width="0.5" height="0.7" depth="0.25" />
+        <geometry id="geo-limb-upper" type="cylinder" radiusTop="0.12" radiusBottom="0.1" height="0.6" radialSegments="12" />
+        <geometry id="geo-limb-lower" type="cylinder" radiusTop="0.1" radiusBottom="0.08" height="0.6" radialSegments="12" />
+        <geometry id="geo-joint" type="sphere" radius="0.11" widthSegments="12" heightSegments="12" />
+        <geometry id="geo-shoe" type="box" width="0.15" height="0.1" depth="0.35" />
+    </defs>
+
+    <scene id="mainScene" camera="mainCam" ambientLight="0.5">
+        <camera id="mainCam" type="perspective" fov="60" near="0.1" far="1000" position="0, 1.5, 4" />
+        <light type="directional" color="#ffffff" intensity="1.0" position="5, 10, 5" />
+        <light type="point" color="#ffe0bd" intensity="0.5" position="-2, 2, 2" />
+
+        <!-- CHARACTER ROOT -->
+        <group id="human-root" position="0, 0, 0">
+            <!-- Idle Breathing Animation -->
+            <animate attributeName="scale" values="1,1,1; 1.01,1.01,1.01; 1,1,1" dur="3s" repeatCount="indefinite" />
+
+            <!-- HIPS (Master Bone) -->
+            <group id="bone-hips" position="0, 0.9, 0">
+                <mesh geometry="geo-torso" material="mat-pants" scale="0.9, 0.4, 1.0" position="0, 0, 0" />
+
+                <!-- SPINE / TORSO -->
+                <group id="bone-spine" position="0, 0.2, 0">
+                    <!-- Shirt Body -->
+                    <mesh geometry="geo-torso" material="mat-shirt" position="0, 0.35, 0" />
+                    
+                    <!-- NECK & HEAD -->
+                    <group id="bone-neck" position="0, 0.75, 0">
+                        <mesh geometry="geo-joint" material="mat-skin" />
+                        <group id="bone-head" position="0, 0.25, 0">
+                            <mesh geometry="geo-head" material="mat-skin" />
+                            <!-- Hair -->
+                            <mesh geometry="geo-head" material="mat-hair" position="0, 0.05, -0.02" scale="1.05, 1.05, 1.05" />
+                        </group>
+                    </group>
+
+                    <!-- ARMS -->
+                    <!-- Left Arm -->
+                    <group id="bone-shoulder-L" position="0.35, 0.6, 0">
+                        <mesh geometry="geo-joint" material="mat-shirt" />
+                        <group id="arm-L" position="0, 0, 0" rotation="0, 0, -10">
+                            <mesh geometry="geo-limb-upper" material="mat-shirt" position="0, -0.3, 0" />
+                            <group id="elbow-L" position="0, -0.6, 0" rotation="0, 0, -5">
+                                <mesh geometry="geo-joint" material="mat-skin" scale="0.8,0.8,0.8" />
+                                <mesh geometry="geo-limb-lower" material="mat-skin" position="0, -0.3, 0" />
+                                <group id="hand-L" position="0, -0.6, 0">
+                                    <mesh geometry="geo-joint" material="mat-skin" scale="0.9,0.9,0.9" />
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+
+                    <!-- Right Arm -->
+                    <group id="bone-shoulder-R" position="-0.35, 0.6, 0">
+                        <mesh geometry="geo-joint" material="mat-shirt" />
+                        <group id="arm-R" position="0, 0, 0" rotation="0, 0, 10">
+                            <mesh geometry="geo-limb-upper" material="mat-shirt" position="0, -0.3, 0" />
+                            <group id="elbow-R" position="0, -0.6, 0" rotation="0, 0, 5">
+                                <mesh geometry="geo-joint" material="mat-skin" scale="0.8,0.8,0.8" />
+                                <mesh geometry="geo-limb-lower" material="mat-skin" position="0, -0.3, 0" />
+                                <group id="hand-R" position="0, -0.6, 0">
+                                    <mesh geometry="geo-joint" material="mat-skin" scale="0.9,0.9,0.9" />
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+
+                <!-- LEGS -->
+                <!-- Left Leg -->
+                <group id="bone-hip-L" position="0.15, -0.1, 0">
+                    <mesh geometry="geo-joint" material="mat-pants" />
+                    <group id="thigh-L" rotation="0, 0, -2">
+                        <mesh geometry="geo-limb-upper" material="mat-pants" position="0, -0.3, 0" />
+                        <group id="knee-L" position="0, -0.6, 0" rotation="5, 0, 0">
+                            <mesh geometry="geo-joint" material="mat-pants" scale="0.9,0.9,0.9" />
+                            <mesh geometry="geo-limb-lower" material="mat-pants" position="0, -0.3, 0" />
+                            <!-- Foot -->
+                            <group id="ankle-L" position="0, -0.6, 0">
+                                <mesh geometry="geo-shoe" material="mat-shoes" position="0, -0.05, 0.1" />
+                            </group>
+                        </group>
+                    </group>
+                </group>
+
+                <!-- Right Leg -->
+                <group id="bone-hip-R" position="-0.15, -0.1, 0">
+                    <mesh geometry="geo-joint" material="mat-pants" />
+                    <group id="thigh-R" rotation="0, 0, 2">
+                        <mesh geometry="geo-limb-upper" material="mat-pants" position="0, -0.3, 0" />
+                        <group id="knee-R" position="0, -0.6, 0" rotation="0, 0, 0">
+                            <mesh geometry="geo-joint" material="mat-pants" scale="0.9,0.9,0.9" />
+                            <mesh geometry="geo-limb-lower" material="mat-pants" position="0, -0.3, 0" />
+                             <!-- Foot -->
+                            <group id="ankle-R" position="0, -0.6, 0">
+                                <mesh geometry="geo-shoe" material="mat-shoes" position="0, -0.05, 0.1" />
+                            </group>
+                        </group>
+                    </group>
+                </group>
+
+            </group> <!-- End Hips -->
+        </group>
+    </scene>
+</svg3>

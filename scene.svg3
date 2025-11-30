@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg3 version="1.0" xmlns="https://github.com/MarcoJ03rgensen/SVG3">
+  <defs>
+    <geometry id="box" type="box" width="1" height="1" depth="1" />
+    <geometry id="sphere" type="sphere" radius="0.5" />
+    <material id="red" type="standard" color="#ff0000" metalness="0" roughness="0.8" />
+    <material id="blue" type="standard" color="#0000ff" metalness="0" roughness="0.8" />
+    <material id="green" type="standard" color="#00ff00" metalness="0" roughness="0.8" />
+  </defs>
+
+  <scene id="demo-scene">
+    <group id="objects" position="0,0,0">
+      <mesh id="cube1" geometry="box" material="red" position="-2,0,0" />
+      <mesh id="cube2" geometry="box" material="blue" position="0,0,0" />
+      <mesh id="cube3" geometry="box" material="green" position="2,0,0" />
+      <mesh id="sphere1" geometry="sphere" material="red" position="0,2,0" />
+    </group>
+  </scene>
+</svg3>

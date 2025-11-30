@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg3 version="1.0" xmlns="https://github.com/MarcoJ03rgensen/SVG3" viewBox="0 0 1920 1080">
+    <metadata>
+        <creator>Gemini AI</creator>
+        <created>2025-11-30</created>
+        <description>Cyber-Samurai Unit 01 - Detailed Mecha Character</description>
+    </metadata>
+
+    <defs>
+        <!-- Materials -->
+        <material id="mat-armor-main" type="standard" color="#a61b1b" roughness="0.3" metalness="0.6" />
+        <material id="mat-armor-dark" type="standard" color="#1a1a1a" roughness="0.7" metalness="0.8" />
+        <material id="mat-joint" type="standard" color="#333333" roughness="0.5" metalness="0.9" />
+        <material id="mat-gold" type="standard" color="#ffd700" roughness="0.2" metalness="1.0" />
+        <material id="mat-glow" type="standard" color="#00ffff" emissive="#00ffff" emissiveIntensity="2" />
+        <material id="mat-blade" type="standard" color="#ffffff" roughness="0.1" metalness="1.0" />
+
+        <!-- Reusable Geometries -->
+        <geometry id="geo-cube" type="box" width="1" height="1" depth="1" />
+        <geometry id="geo-sphere" type="sphere" radius="0.5" widthSegments="16" heightSegments="16" />
+        <geometry id="geo-cyl" type="cylinder" radiusTop="0.5" radiusBottom="0.5" height="1" radialSegments="16" />
+        <geometry id="geo-cone" type="cone" radius="0.5" height="1" radialSegments="16" />
+    </defs>
+
+    <scene id="mainScene" camera="mainCam" ambientLight="0.4">
+        <camera id="mainCam" type="perspective" fov="60" near="0.1" far="1000" position="0, 2, 6" />
+
+        <light type="directional" color="#ffffff" intensity="1.2" position="5, 10, 7" />
+        <light type="point" color="#00ffff" intensity="0.8" position="0, 2, 2" />
+
+        <!-- CHARACTER ROOT (Global Position) -->
+        <group id="character-root" position="0, -1, 0">
+            <!-- Idle Hover Animation -->
+            <animate attributeName="position" values="0,-1,0; 0,-0.9,0; 0,-1,0" dur="4s" repeatCount="indefinite" />
+
+            <!-- HIPS / PELVIS GROUP (The Master Bone) -->
+            <group id="bone-hips" position="0, 1.0, 0">
+                
+                <!-- Pelvis Geometry (Child of Bone, does not affect children scale) -->
+                <mesh geometry="geo-cube" material="mat-armor-dark" scale="1.0, 0.4, 0.6" />
+                <mesh geometry="geo-cyl" material="mat-gold" scale="0.3, 0.1, 0.3" rotation="90,0,0" position="0, 0, 0.35" />
+
+                <!-- SPINE / TORSO GROUP -->
+                <group id="bone-torso" position="0, 0.2, 0">
+                    <mesh geometry="geo-cyl" material="mat-joint" scale="0.6, 1.2, 0.6" position="0, 0.6, 0" />
+                    
+                    <mesh geometry="geo-cube" material="mat-armor-main" scale="1.6, 1.2, 1.0" position="0, 1.4, 0">
+                        <mesh geometry="geo-sphere" material="mat-glow" scale="0.3, 0.3, 0.1" position="0, 0, 0.5" />
+                    </mesh>
+
+                    <mesh geometry="geo-cube" material="mat-gold" scale="0.2, 1.0, 0.1" position="-0.5, 1.4, 0.52" />
+                    <mesh geometry="geo-cube" material="mat-gold" scale="0.2, 1.0, 0.1" position="0.5, 1.4, 0.52" />
+
+                    <!-- Backpack -->
+                    <mesh geometry="geo-cube" material="mat-armor-dark" scale="1.2, 1.5, 0.5" position="0, 1.5, -0.6">
+                        <mesh geometry="geo-cyl" material="mat-glow" scale="0.1, 1.0, 0.1" position="-0.4, 0, 0.3" />
+                        <mesh geometry="geo-cyl" material="mat-glow" scale="0.1, 1.0, 0.1" position="0.4, 0, 0.3" />
+                    </mesh>
+
+                    <!-- NECK & HEAD -->
+                    <group id="bone-head" position="0, 1.5, 0">
+                         <mesh geometry="geo-cyl" material="mat-joint" scale="0.3, 0.2, 0.3" position="0, -0.1, 0"/>
+                         <group position="0, 0.3, 0">
+                            <!-- Helmet -->
+                            <mesh geometry="geo-cube" material="mat-armor-main" scale="0.6, 0.7, 0.7" />
+                            <!-- Visor -->
+                            <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.5, 0.3, 0.1" position="0, -0.1, 0.36" />
+                            <mesh geometry="geo-cube" material="mat-glow" scale="0.4, 0.05, 0.05" position="0, -0.1, 0.4" />
+                            <!-- Crest -->
+                            <mesh geometry="geo-cube" material="mat-gold" scale="0.1, 0.5, 0.5" position="0, 0.5, 0" rotation="-20, 0, 0" />
+                         </group>
+                    </group>
+
+                    <!-- LEFT ARM -->
+                    <group id="shoulder-L" position="1.1, 1.8, 0">
+                        <mesh geometry="geo-sphere" material="mat-armor-main" scale="0.7, 0.7, 0.7" />
+                        <mesh geometry="geo-cone" material="mat-gold" scale="0.2, 0.5, 0.2" position="0, 0.5, 0" />
+                        <group id="arm-L" position="0, -0.5, 0" rotation="0, 0, -20">
+                            <mesh geometry="geo-cyl" material="mat-joint" scale="0.25, 0.8, 0.25" position="0, -0.4, 0" />
+                            <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.5, 0.6, 0.5" position="0, -0.4, 0" />
+                            <group id="forearm-L" position="0, -0.9, 0" rotation="-20, 0, 0">
+                                <mesh geometry="geo-cube" material="mat-armor-main" scale="0.45, 0.9, 0.45" position="0, -0.45, 0" />
+                                <mesh geometry="geo-cube" material="mat-glow" scale="0.1, 0.5, 0.05" position="0.23, -0.45, 0" />
+                                <group id="hand-L" position="0, -1.0, 0">
+                                    <mesh geometry="geo-cube" material="mat-joint" scale="0.3, 0.3, 0.3" />
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+
+                    <!-- RIGHT ARM -->
+                    <group id="shoulder-R" position="-1.1, 1.8, 0">
+                        <mesh geometry="geo-sphere" material="mat-armor-main" scale="0.7, 0.7, 0.7" />
+                        <mesh geometry="geo-cone" material="mat-gold" scale="0.2, 0.5, 0.2" position="0, 0.5, 0" />
+                        <group id="arm-R" position="0, -0.5, 0" rotation="0, 0, 30">
+                            <mesh geometry="geo-cyl" material="mat-joint" scale="0.25, 0.8, 0.25" position="0, -0.4, 0" />
+                            <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.5, 0.6, 0.5" position="0, -0.4, 0" />
+                            <group id="forearm-R" position="0, -0.9, 0" rotation="-45, 0, 0">
+                                <mesh geometry="geo-cube" material="mat-armor-main" scale="0.45, 0.9, 0.45" position="0, -0.45, 0" />
+                                <group id="hand-R" position="0, -1.0, 0">
+                                    <mesh geometry="geo-cube" material="mat-joint" scale="0.3, 0.3, 0.3" />
+                                    <!-- SWORD -->
+                                    <group id="sword" position="0, -0.2, 0.5" rotation="80, 0, 0">
+                                        <mesh geometry="geo-cyl" material="mat-armor-dark" scale="0.1, 0.8, 0.1" position="0, -0.4, 0" />
+                                        <mesh geometry="geo-cube" material="mat-gold" scale="0.4, 0.1, 0.2" position="0, 0, 0" />
+                                        <mesh geometry="geo-cube" material="mat-blade" scale="0.15, 3.0, 0.05" position="0, 1.5, 0" />
+                                        <mesh geometry="geo-cube" material="mat-glow" scale="0.05, 3.0, 0.06" position="0.08, 1.5, 0" />
+                                    </group>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                </group> <!-- End Torso -->
+            </group> <!-- End Bone-Hips -->
+
+            <!-- LEGS -->
+            <group id="leg-L" position="0.6, 2.8, 0" rotation="0, 0, -5">
+                <mesh geometry="geo-cube" material="mat-armor-main" scale="0.6, 1.4, 0.7" position="0, -0.7, 0">
+                    <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.62, 0.5, 0.72" position="0, 0, 0" />
+                </mesh>
+                <mesh geometry="geo-sphere" material="mat-joint" scale="0.4, 0.4, 0.4" position="0, -1.5, 0.3" />
+                <group id="shin-L" position="0, -1.5, 0" rotation="10, 0, 0">
+                    <mesh geometry="geo-cube" material="mat-armor-main" scale="0.5, 1.6, 0.6" position="0, -0.8, 0" />
+                    <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.55, 1.0, 0.2" position="0, -0.8, 0.25" />
+                    <group id="foot-L" position="0, -1.7, 0" rotation="-10, 0, 0">
+                        <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.6, 0.3, 1.0" position="0, -0.15, 0.2" />
+                    </group>
+                </group>
+            </group>
+
+            <group id="leg-R" position="-0.6, 2.8, 0" rotation="0, 0, 5">
+                 <mesh geometry="geo-cube" material="mat-armor-main" scale="0.6, 1.4, 0.7" position="0, -0.7, 0">
+                    <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.62, 0.5, 0.72" position="0, 0, 0" />
+                </mesh>
+                <mesh geometry="geo-sphere" material="mat-joint" scale="0.4, 0.4, 0.4" position="0, -1.5, 0.3" />
+                <group id="shin-R" position="0, -1.5, 0" rotation="-15, 0, 0">
+                    <mesh geometry="geo-cube" material="mat-armor-main" scale="0.5, 1.6, 0.6" position="0, -0.8, 0" />
+                    <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.55, 1.0, 0.2" position="0, -0.8, 0.25" />
+                    <group id="foot-R" position="0, -1.7, 0" rotation="15, 0, 0">
+                         <mesh geometry="geo-cube" material="mat-armor-dark" scale="0.6, 0.3, 1.0" position="0, -0.15, 0.2" />
+                    </group>
+                </group>
+            </group>
+
+        </group>
+    </scene>
+</svg3>
